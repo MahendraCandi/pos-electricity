@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,13 +19,13 @@ public class UserDto {
     private String hakAkses;
     private Integer hakAksesValue;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private String createdDate;
+    private LocalDateTime createdDate;
 
     public UserDto(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.hakAkses = user.getHakAkses().name();
         this.hakAksesValue = user.getHakAkses().getValue();
-        this.createdDate = user.getCreatedDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+        this.createdDate = user.getCreatedDate();
     }
 }
