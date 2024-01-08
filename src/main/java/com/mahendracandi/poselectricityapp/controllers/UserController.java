@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,8 +34,29 @@ public class UserController {
         return new UserDto(user);
     }
 
-    // todo retrieve user api
-    // todo update user api
-    // todo delete user api
+    @GetMapping(produces = "application/json")
+    @Operation(summary = "Find users by parameters")
+    @ApiResponse(responseCode = "200", description = "Successfully find users")
+    public List<UserDto> getUser(@RequestParam(name = "username", required = false) String username) {
+        return userService.findUsers(username).stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @PatchMapping(value = "/{username}", produces = "application/json")
+    @Operation(summary = "Update a user by username")
+    @ApiResponse(responseCode = "200", description = "Successfully update a user")
+    public UserDto updateUser(@PathVariable(value = "username") String username,
+                              @RequestBody UserRequestDto requestDto) {
+        final var user = userService.updateUser(username, requestDto);
+        return new UserDto(user);
+    }
+
+    @DeleteMapping(value = "/{username}", produces = "application/json")
+    @Operation(summary = "Delete a user by username")
+    @ApiResponse(responseCode = "200", description = "Successfully delete a user")
+    public void deleteUser(@PathVariable(value = "username") String username) {
+        userService.deleteUser(username);
+    }
 
 }
