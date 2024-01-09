@@ -50,4 +50,22 @@ public class TarifListrikController {
                 .map(TarifListrikDto::new)
                 .collect(Collectors.toList());
     }
+
+    @PatchMapping(value = "/{kodeTarif}", produces = "application/json")
+    @Operation(summary = "Update tarif listrik by kode tarif")
+    @ApiResponse(responseCode = "200", description = "Successfully update tarif listrik")
+    public TarifListrikDto updateTarifListrik(
+            @PathVariable("kodeTarif") String kodeTarif,
+            @RequestBody TarifListrikRequestDto requestDto
+    ) {
+        final var tarifListrik = tarifListrikService.updateTarifListrik(kodeTarif, requestDto);
+        return new TarifListrikDto(tarifListrik);
+    }
+
+    @DeleteMapping("/{kodeTarif}")
+    @Operation(summary = "Delete tarif listrik by kode tarif")
+    @ApiResponse(responseCode = "200", description = "Successfully delete tarif listrik")
+    public void deleteTarifListrik(@PathVariable("kodeTarif") String kodeTarif) {
+        tarifListrikService.deleteTarifListrik(kodeTarif);
+    }
 }

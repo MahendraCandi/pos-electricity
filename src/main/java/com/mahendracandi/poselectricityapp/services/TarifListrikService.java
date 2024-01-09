@@ -1,5 +1,6 @@
 package com.mahendracandi.poselectricityapp.services;
 
+import com.mahendracandi.poselectricityapp.dtos.TarifListrikRequestDto;
 import com.mahendracandi.poselectricityapp.entities.TarifListrik;
 import com.mahendracandi.poselectricityapp.repositories.TarifListrikRepository;
 import com.mahendracandi.poselectricityapp.repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TarifListrikService {
@@ -44,5 +46,32 @@ public class TarifListrikService {
         }
 
         return tarifListrikRepository.findAllByKodeTarifStartsWith(kodeTarif);
+    }
+
+    public TarifListrik updateTarifListrik(String kodeTarif, TarifListrikRequestDto requestDto) {
+        var tarifListrik = tarifListrikRepository.findAllByKodeTarif(kodeTarif)
+                .orElseThrow(() -> new IllegalArgumentException("Kode Tarif not found"));
+
+        if (Objects.nonNull(requestDto.getKodeTarif())) {
+            tarifListrik.setKodeTarif(requestDto.getKodeTarif());
+        }
+
+        if (Objects.nonNull(requestDto.getBeban())) {
+            tarifListrik.setBeban(requestDto.getBeban());
+        }
+
+        if (Objects.nonNull(requestDto.getTarifPerKwh())) {
+            tarifListrik.setTarifPerkwh(requestDto.getTarifPerKwh());
+        }
+
+        tarifListrik.setUpdatedDate(LocalDateTime.now());
+        return tarifListrikRepository.save(tarifListrik);
+    }
+
+    public void deleteTarifListrik(String kodeTarif) {
+        var tarifListrik = tarifListrikRepository.findAllByKodeTarif(kodeTarif)
+                .orElseThrow(() -> new IllegalArgumentException("Kode Tarif not found"));
+
+        tarifListrikRepository.delete(tarifListrik);
     }
 }
