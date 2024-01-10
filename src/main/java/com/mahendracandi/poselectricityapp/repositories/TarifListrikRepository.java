@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface TarifListrikRepository extends JpaRepository<TarifListrik, Integer> {
     List<TarifListrik> findAllByKodeTarifStartsWith(String kodeTarif);
-    Optional<TarifListrik> findAllByKodeTarif(String kodeTarif);
+    Optional<TarifListrik> findByKodeTarif(String kodeTarif);
 }

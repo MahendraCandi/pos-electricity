@@ -29,9 +29,10 @@ CREATE TABLE `pelanggan` (
   `nama` varchar(150) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   PRIMARY KEY (`pelanggan_id`),
+  UNIQUE KEY `noMeter_unique` (`no_meter`),
   KEY `pelanggan_tarif_listrik_tarif_listrik_id_fk` (`tarif_listrik_id`),
   CONSTRAINT `pelanggan_tarif_listrik_tarif_listrik_id_fk` FOREIGN KEY (`tarif_listrik_id`) REFERENCES `tarif_listrik` (`tarif_listrik_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='The customers';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='The customers';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +41,7 @@ CREATE TABLE `pelanggan` (
 
 LOCK TABLES `pelanggan` WRITE;
 /*!40000 ALTER TABLE `pelanggan` DISABLE KEYS */;
+INSERT INTO `pelanggan` VALUES (1,1,'8776672178','Japra','Cilidig'),(2,2,'8776672177','Jayadinar','Cibunar Parung Panjang SGP'),(3,2,'8776672179','Jayadun','Cibunar Parung Panjang SGP');
 /*!40000 ALTER TABLE `pelanggan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +99,7 @@ CREATE TABLE `tarif_listrik` (
 
 LOCK TABLES `tarif_listrik` WRITE;
 /*!40000 ALTER TABLE `tarif_listrik` DISABLE KEYS */;
-INSERT INTO `tarif_listrik` VALUES (1,'R101',900,1500,2,'2024-01-09 00:25:42',NULL),(2,'R102',1300,1600,3,'2024-01-09 00:26:54',NULL),(3,'R103',2200,1700,3,'2024-01-09 00:56:39',NULL);
+INSERT INTO `tarif_listrik` VALUES (1,'R101',900,1000,2,'2024-01-09 00:25:42','2024-01-09 15:38:59'),(2,'R102',1300,1600,3,'2024-01-09 00:26:54',NULL);
 /*!40000 ALTER TABLE `tarif_listrik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +118,7 @@ CREATE TABLE `user` (
   `created_date` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username_unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='All the user has access to the app';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='All the user has access to the app';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +127,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'user-002','[-31, -28, 49, 28, 66, -110, -64, -102, 38, 61, 84, 85, 19, -59, -66, -45]',1,'2024-01-08 00:58:27'),(3,'user-003','[-47, 63, -21, 9, -112, -82, -35, -72, 39, 44, -7, 82, 76, -100, -96, -116]',1,'2024-01-08 01:01:31'),(4,'user-004','[47, 15, -83, -127, -65, -102, -54, 33, 25, -105, -73, 87, -119, -22, -7, -15]',1,'2024-01-08 01:10:32'),(5,'user-005','[-28, 120, -105, 11, -29, -41, -112, 101, 81, -95, 114, 86, 13, -113, -41, -74]',1,'2024-01-08 01:11:26');
+INSERT INTO `user` VALUES (2,'user-002','[-31, -28, 49, 28, 66, -110, -64, -102, 38, 61, 84, 85, 19, -59, -66, -45]',1,'2024-01-08 00:58:27'),(3,'user-003','[-47, 63, -21, 9, -112, -82, -35, -72, 39, 44, -7, 82, 76, -100, -96, -116]',1,'2024-01-08 01:01:31'),(4,'user-004','[47, 15, -83, -127, -65, -102, -54, 33, 25, -105, -73, 87, -119, -22, -7, -15]',1,'2024-01-08 01:10:32'),(5,'user-005','[-28, 120, -105, 11, -29, -41, -112, 101, 81, -95, 114, 86, 13, -113, -41, -74]',1,'2024-01-08 01:11:26'),(6,'123','[15, 85, 0, -93, 105, 73, -99, -104, 31, -89, 80, 114, -107, 57, 15, -46]',2,'2024-01-09 19:02:26');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -138,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-09  1:04:54
+-- Dump completed on 2024-01-10 22:33:48

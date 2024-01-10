@@ -49,7 +49,7 @@ public class TarifListrikService {
     }
 
     public TarifListrik updateTarifListrik(String kodeTarif, TarifListrikRequestDto requestDto) {
-        var tarifListrik = tarifListrikRepository.findAllByKodeTarif(kodeTarif)
+        var tarifListrik = tarifListrikRepository.findByKodeTarif(kodeTarif)
                 .orElseThrow(() -> new IllegalArgumentException("Kode Tarif not found"));
 
         if (Objects.nonNull(requestDto.getKodeTarif())) {
@@ -69,7 +69,7 @@ public class TarifListrikService {
     }
 
     public void deleteTarifListrik(String kodeTarif) {
-        var tarifListrik = tarifListrikRepository.findAllByKodeTarif(kodeTarif)
+        var tarifListrik = tarifListrikRepository.findByKodeTarif(kodeTarif)
                 .orElseThrow(() -> new IllegalArgumentException("Kode Tarif not found"));
 
         tarifListrikRepository.delete(tarifListrik);
