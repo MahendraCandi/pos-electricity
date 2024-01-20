@@ -1,20 +1,28 @@
 package com.mahendracandi.poselectricityapp.entities;
 
+import com.mahendracandi.poselectricityapp.enums.Bulan;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tagihan")
 public class Tagihan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer tagihanId;
-    private Integer pelangganId;
     private String tahunTagihan;
-    private String bulanTagihan;
+    private Bulan bulanTagihan;
     private BigDecimal pemakaian;
+
+    @ManyToOne
+    @JoinColumn(name = "pelanggan_id")
+    private Pelanggan pelanggan;
 
 }
