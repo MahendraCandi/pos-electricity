@@ -23,4 +23,7 @@ public class User {
     private HakAkses hakAkses;
     private LocalDateTime createdDate;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserLogin userLogin;
+
 }

@@ -4,16 +4,11 @@ import com.mahendracandi.poselectricityapp.dtos.UserRequestDto;
 import com.mahendracandi.poselectricityapp.entities.User;
 import com.mahendracandi.poselectricityapp.enums.HakAkses;
 import com.mahendracandi.poselectricityapp.repositories.UserRepository;
+import com.mahendracandi.poselectricityapp.utils.PasswordUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +23,7 @@ public class UserService {
     public User createUser(String username, String password, Integer hakAkses) {
         return userRepository.save(User.builder()
                 .username(username)
-                .password(hashPassword(password))
+                .password(PasswordUtil.hashPassword(password))
                 .hakAkses(HakAkses.findByValue(hakAkses))
                 .createdDate(LocalDateTime.now())
                 .build());
@@ -50,7 +45,7 @@ public class UserService {
         }
 
         if (Objects.nonNull(requestDto.getPassword())) {
-            user.setPassword(hashPassword(requestDto.getPassword()));
+            user.setPassword(PasswordUtil.hashPassword(requestDto.getPassword()));
         }
 
         if (Objects.nonNull(requestDto.getHakAkses())) {
@@ -65,20 +60,5 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found")); // todo implement better exception
 
         userRepository.delete(user);
-    }
-
-    private static String hashPassword(String password) {
-        final var secureRandom = new SecureRandom();
-        final var salt = new byte[16];
-        secureRandom.nextBytes(salt);
-
-        final var spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-        final SecretKeyFactory factory;
-        try {
-            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            return Arrays.toString(factory.generateSecret(spec).getEncoded());
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new IllegalArgumentException(e.getMessage(), e); // todo implement custom exception
-        }
     }
 }
