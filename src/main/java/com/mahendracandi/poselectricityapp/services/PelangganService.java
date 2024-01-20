@@ -60,4 +60,10 @@ public class PelangganService {
 
         return pelangganRepository.save(pelanggan);
     }
+
+    public void deletePelanggan(String noMeter) {
+        var pelanggan = pelangganRepository.findPelangganByNoMeter(noMeter)
+                .orElseThrow(() -> new IllegalArgumentException("Pelanggan not found")); // todo update to better exception
+        pelangganRepository.delete(pelanggan);
+    }
 }

@@ -61,6 +61,11 @@ public class PelangganController {
         return new PelangganDto(pelanggan);
     }
 
-    // todo create delete api
+    @DeleteMapping("/{noMeter}")
+    @Operation(summary = "Delete pelanggan by no meter")
+    @ApiResponse(responseCode = "200", description = "Successfully delete by no meter")
+    public void deletePelanggan(@PathVariable("noMeter") String noMeter) {
+        pelangganService.deletePelanggan(noMeter);
+    }
 
 }
