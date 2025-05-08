@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: print greeting
-      run: echo "Hello world"
+      run: |
+        echo "Hello world"
+        echo "run multiple command"
     - name: goodbye
       run: echo "Good bye"
